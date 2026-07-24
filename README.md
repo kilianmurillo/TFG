@@ -1,2 +1,2 @@
 # TFG
-Diseño en SolidWorks del Robotino 4, un robot omnidireccional de cuatro ruedas, con el objetivo de poder hacer una simulación realista en la última versión de Gazebo y conseguir que el robot se pueda mover de manera teleoperada en simulación
+Diseño en SolidWorks del Robotino 4, un robot omnidireccional de cuatro ruedas, con el objetivo de poder hacer una simulación realista en la última versión de Gazebo y conseguir que el robot se pueda mover de manera teleoperada en simulación.

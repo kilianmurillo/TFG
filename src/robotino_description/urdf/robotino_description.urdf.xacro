@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<robot name="mi_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  
+    <xacro:include filename="robotino_description.urdf" />
+    <xacro:include filename="robotino_description.ros2_control.xacro" />
+
+</robot>

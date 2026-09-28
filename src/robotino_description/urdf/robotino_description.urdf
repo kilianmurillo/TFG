@@ -1,0 +1,330 @@
+<?xml version="1.0"?>
+<robot
+  name="robotino_description">
+
+  <link name="base_link">
+
+</link>
+
+  <link
+    name="chasis_link">
+    <inertial>
+      <origin
+        xyz="0.0750820912111434 -1.43156698820812E-05 0.168076535406779"
+        rpy="0 0 0" />
+      <mass
+        value="90.5436543221932" />
+      <inertia
+        ixx="1.39918645658022"
+        ixy="-0.000405479151189769"
+        ixz="-0.0015543417266118"
+        iyy="0.774326169008615"
+        iyz="-3.63158115482574E-05"
+        izz="1.88558197947867" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotino_description/meshes/chasis_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.647058823529412 0.619607843137255 0.588235294117647 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotino_description/meshes/chasis_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+<joint name="chasis_joint" type="fixed">
+  <parent link="base_link"/>
+  <child link="chasis_link"/>
+  <origin xyz="0 0 0.06"/>
+</joint>
+
+  <link
+    name="rueda_link">
+    <inertial>
+      <origin
+        xyz="-2.05967388977601E-10 1.31737952686374E-10 -0.000273477957212588"
+        rpy="0 0 0" />
+      <mass
+        value="0.498106960399148" />
+      <inertia
+        ixx="0.000256159949378851"
+        ixy="5.34153090637298E-14"
+        ixz="-2.02762137050012E-13"
+        iyy="0.000256159949082368"
+        iyz="-5.17902095167097E-13"
+        izz="0.000419607620337151" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotino_description/meshes/rueda_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotino_description/meshes/rueda_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rueda_joint"
+    type="fixed">
+    <origin
+      xyz="0.17547 0 0"
+      rpy="1.5708 0 1.5708" />
+    <parent
+      link="chasis_link" />
+    <child
+      link="rueda_link" />
+    <axis
+      xyz="0 0 0" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="izquierda_link">
+    <inertial>
+      <origin
+        xyz="-1.26204879880021E-11 -9.7027664982402E-11 -0.000273478049973019"
+        rpy="0 0 0" />
+      <mass
+        value="0.498106963165628" />
+      <inertia
+        ixx="0.000256159949494238"
+        ixy="5.74017999195233E-14"
+        ixz="4.18944122015236E-14"
+        iyy="0.000256159949093497"
+        iyz="3.94879593317418E-14"
+        izz="0.000419607619799673" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotino_description/meshes/izquierda_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.498039215686275 0.498039215686275 0.498039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotino_description/meshes/izquierda_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="izquierda_joint"
+    type="continuous">
+    <origin
+      xyz="-0.0877784602286706 0.151987458399034 0"
+      rpy="1.5707963267949 0 -2.61799387799149" />
+    <parent
+      link="chasis_link" />
+    <child
+      link="izquierda_link" />
+    <axis
+      xyz="0 0 1" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="derecha_link">
+    <inertial>
+      <origin
+        xyz="-9.88611970065278E-11 9.65094390037793E-11 -0.000273478063246235"
+        rpy="0 0 0" />
+      <mass
+        value="0.498106961392022" />
+      <inertia
+        ixx="0.00025615994928719"
+        ixy="-5.1148624955304E-14"
+        ixz="1.24456709180024E-13"
+        iyy="0.000256159949293269"
+        iyz="2.16307059306523E-13"
+        izz="0.000419607620211318" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotino_description/meshes/derecha_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.498039215686275 0.498039215686275 0.498039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotino_description/meshes/derecha_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="derecha_joint"
+    type="continuous">
+    <origin
+      xyz="-0.087778460228671 -0.151987458329307 0"
+      rpy="1.5707963267949 0 -0.523598775598295" />
+    <parent
+      link="chasis_link" />
+    <child
+      link="derecha_link" />
+    <axis
+      xyz="0 0 1" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="palo_link">
+    <inertial>
+      <origin
+        xyz="1.73472347597681E-16 -0.0873886605652484 -4.71844785465692E-16"
+        rpy="0 0 0" />
+      <mass
+        value="6.20700555638337" />
+      <inertia
+        ixx="0.221613610672497"
+        ixy="-2.37138546343171E-16"
+        ixz="2.35922392732846E-16"
+        iyy="0.117280747364722"
+        iyz="1.5052169005132E-15"
+        izz="0.2216136106725" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotino_description/meshes/palo_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.647058823529412 0.619607843137255 0.588235294117647 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotino_description/meshes/palo_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="palo_joint"
+    type="fixed">
+    <origin
+      xyz="-2.846E-05 0 0.695"
+      rpy="1.5708 0 1.5708" />
+    <parent
+      link="chasis_link" />
+    <child
+      link="palo_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="bandeja_peque_link">
+    <inertial>
+      <origin
+        xyz="0 -0.0099999999999999 -2.77555756156289E-17"
+        rpy="0 0 0" />
+      <mass
+        value="1.55169544346107" />
+      <inertia
+        ixx="0.017159165445607"
+        ixy="-2.40741243048404E-35"
+        ixz="8.67361737988404E-19"
+        iyy="0.0342148845283166"
+        iyz="3.8677229917804E-19"
+        izz="0.017159165445607" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotino_description/meshes/bandeja_peque_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotino_description/meshes/bandeja_peque_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="bandeja_peque_joint"
+    type="continuous">
+    <origin
+      xyz="-2.846E-05 0 0.731"
+      rpy="1.5708 0 1.5708" />
+    <parent
+      link="chasis_link" />
+    <child
+      link="bandeja_peque_link" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+</robot>

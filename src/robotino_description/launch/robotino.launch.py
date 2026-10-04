@@ -18,7 +18,7 @@ def generate_launch_description():
         description='Use joint_state_publisher_gui to move joints'
     )
 
-   urdf_file = PathJoinSubstitution([pkg, 'urdf', 'robotino_description.urdf.xacro']) 
+    urdf_file = PathJoinSubstitution([pkg, 'urdf', 'robotino_description.urdf.xacro']) 
     
     # 2. ENVOLVEMOS el comando en ParameterValue con value_type=str
     robot_description = ParameterValue(Command(['xacro ', urdf_file]), value_type=str)
@@ -99,7 +99,7 @@ def generate_launch_description():
         jsp_gui,
         rsp,
         rviz,
-        gazebo,
+        #gazebo,
         spawn_robot,
         bridge
     ])

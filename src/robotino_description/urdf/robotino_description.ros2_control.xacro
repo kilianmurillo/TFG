@@ -6,29 +6,24 @@
             <plugin>mock_components/GenericSystem</plugin>
             <param name="calculate_dynamics">true</param>
         </hardware>
+
         <joint name="rueda_joint">
-            <command_interface name="velocity" />
-            <state_interface name="position" />
-            <state_interface name="velocity" />
+            <command_interface name="velocity"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
         </joint>
 
         <joint name="izquierda_joint">
-            <command_interface name="velocity" />
-            <state_interface name="position" />
-            <state_interface name="velocity" />
+            <command_interface name="velocity"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
         </joint>
 
         <joint name="derecha_joint">
-            <command_interface name="velocity" />
-            <state_interface name="position" />
-            <state_interface name="velocity" />
+            <command_interface name="velocity"/>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
         </joint>
     </ros2_control>
-
-    <gazebo>
-        <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so" />
-        <parameters $(find robotino_description)/config/my_controllers.yaml />
-    </gazebo>
-    
 
 </robot>

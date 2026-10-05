@@ -95,7 +95,7 @@
   </link>
   <joint
     name="rueda_joint"
-    type="fixed">
+    type="continuous">
     <origin
       xyz="0.17547 0 0"
       rpy="1.5708 0 1.5708" />

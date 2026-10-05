@@ -56,15 +56,6 @@ def generate_launch_description():
         value=os.path.join(pkg, '..')
     )
 
-    # Launch Gazebo Harmonic with an empty world
-    ros_gz_sim_pkg = get_package_share_directory('ros_gz_sim')
-    gazebo = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(ros_gz_sim_pkg, 'launch', 'gz_sim.launch.py')
-        ),
-        launch_arguments={'gz_args': 'empty.sdf -r -v4'}.items()
-    )
-    
     # Spawn the robot in Gazebo Harmonic
     spawn_robot = Node(
         package='ros_gz_sim',

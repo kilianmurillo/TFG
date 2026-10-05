@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+    <!-- Definición de las interfaces de hardware para ros2_control -->
     <ros2_control name="RobotinoDescriptionHardwareInterface" type="system">
         <hardware>
-            <plugin>mock_components/GenericSystem</plugin>
-            <param name="calculate_dynamics">true</param>
+            <!-- Plugin de hardware para Gazebo Harmonic (gz-sim) -->
+            <plugin>gz_ros2_control/GazeboSimSystem</plugin>
         </hardware>
 
         <joint name="rueda_joint">
@@ -25,5 +26,13 @@
             <state_interface name="velocity"/>
         </joint>
     </ros2_control>
+
+    <!-- Plugin de Gazebo Harmonic para cargar el sistema de ros2_control -->
+    <gazebo>
+        <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+            <!-- Ruta al archivo YAML con la configuración de los controladores -->
+            <parameters>$(find robotino_description)/config/ros2_controllers.yaml</parameters>
+        </plugin>
+    </gazebo>
 
 </robot>

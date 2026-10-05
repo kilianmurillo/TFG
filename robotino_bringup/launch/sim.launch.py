@@ -99,7 +99,7 @@ def generate_launch_description():
         jsp_gui,
         rsp,
         rviz,
-        #gazebo,
+        gazebo,
         spawn_robot,
         bridge
     ])

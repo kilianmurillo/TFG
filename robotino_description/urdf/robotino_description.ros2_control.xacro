@@ -31,7 +31,7 @@
     <gazebo>
         <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
             <!-- Ruta al archivo YAML con la configuración de los controladores -->
-            <parameters>$(find robotino_description)/config/ros2_controllers.yaml</parameters>
+            <parameters>$(find robotino_bringup)/config/robotino_controllers.yaml</parameters>
         </plugin>
     </gazebo>
 

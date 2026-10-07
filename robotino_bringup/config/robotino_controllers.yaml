@@ -6,6 +6,12 @@ controller_manager:
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-    omni_drive_controller:
-      type:
-      #TO BE COMPLETED
+    wheel_velocity_controller:
+      type: velocity_controllers/JointGroupVelocityController
+
+wheel_velocity_controller:
+  ros__parameters:
+    joints:
+      - rueda_joint
+      - izquierda_joint
+      - derecha_joint

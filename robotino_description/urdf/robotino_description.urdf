@@ -2,12 +2,27 @@
 <robot
   name="robotino_description">
 
-  <link name="base_link">
+  <!-- Enlace ficticio proyectado a ras de suelo -->
+  <link name="base_footprint"/>
 
-</link>
+  <!-- Unión que eleva el robot 6 cm desde el suelo ya que las ruedas tienen un radio de 6cm -->
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0.06" rpy="0 0 0"/>
+  </joint>
 
-  <link
-    name="chasis_link">
+  <!-- Enlace central del robot -->
+  <link name="base_link"/>
+
+  <!-- Unión entre base_link y el chasis 3D (ahora sin elevación en Z, ya que la elevación la hace el footprint) -->
+  <joint name="chasis_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="chasis_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="chasis_link">
     <inertial>
       <origin
         xyz="0.0750820912111434 -1.43156698820812E-05 0.168076535406779"
@@ -37,21 +52,12 @@
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0.15" rpy="0 0 0" /> <!-- Desplazamos la colisión a la mitad del alto (0.3 / 2) para que quede centrado -->
       <geometry>
-        <mesh
-          filename="package://robotino_description/meshes/chasis_link.STL" />
+        <cylinder radius="0.2325" length="0.300" />
       </geometry>
     </collision>
   </link>
-
-  <joint name="chasis_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="chasis_link"/>
-    <origin xyz="0 0 0.06"/>
-  </joint>
 
   <link
     name="rueda_link">
@@ -84,15 +90,13 @@
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://robotino_description/meshes/rueda_link.STL" />
+        <cylinder radius="0.060" length="0.035" />
       </geometry>
     </collision>
   </link>
+
   <joint
     name="rueda_joint"
     type="continuous">
@@ -109,6 +113,7 @@
       damping="0.1"
       friction="0.1" />
   </joint>
+
   <link
     name="izquierda_link">
     <inertial>
@@ -140,15 +145,13 @@
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://robotino_description/meshes/izquierda_link.STL" />
+        <cylinder radius="0.060" length="0.035" />
       </geometry>
     </collision>
   </link>
+
   <joint
     name="izquierda_joint"
     type="continuous">
@@ -165,6 +168,7 @@
       damping="0.1"
       friction="0.1" />
   </joint>
+
   <link
     name="derecha_link">
     <inertial>
@@ -196,15 +200,13 @@
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://robotino_description/meshes/derecha_link.STL" />
+        <cylinder radius="0.060" length="0.035" />
       </geometry>
     </collision>
   </link>
+
   <joint
     name="derecha_joint"
     type="continuous">
@@ -221,6 +223,7 @@
       damping="0.1"
       friction="0.1" />
   </joint>
+
   <link
     name="palo_link">
     <inertial>
@@ -252,15 +255,14 @@
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <!-- Desplazamos -0.283 en el eje Y local (hacia abajo) para que quede debajo de la junta -->
+      <origin xyz="0 -0.283 0" rpy="-1.5708 0 0" /> 
       <geometry>
-        <mesh
-          filename="package://robotino_description/meshes/palo_link.STL" />
+        <cylinder radius="0.100" length="0.566" />
       </geometry>
     </collision>
   </link>
+
   <joint
     name="palo_joint"
     type="fixed">

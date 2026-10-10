@@ -23,22 +23,15 @@ def generate_launch_description():
     # 2. ENVOLVEMOS el comando en ParameterValue con value_type=str
     robot_description = ParameterValue(Command(['xacro ', urdf_file]), value_type=str)
 
-    jsp_gui = Node(
-        condition=None,
-        package='joint_state_publisher_gui',
-        executable='joint_state_publisher_gui',
-        name='joint_state_publisher_gui',
-        arguments=[],
-        parameters=[{'rate': 30.0}],
-        emulate_tty=True
-    )
-
     rsp = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
         name='robot_state_publisher',
         # Aquí ahora lo lee como un texto sin problemas
-        parameters=[{'robot_description': robot_description}],
+        parameters=[{
+            'robot_description': robot_description,
+            'use_sim_time': True
+        }],
         output='screen'
     )
 
@@ -88,7 +81,31 @@ def generate_launch_description():
             '/odom@nav_msgs/msg/Odometry[gz.msgs.Odometry',
             
             # Transformadas (TF): Gazebo -> ROS 2
-            '/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V'
+            '/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V',
+
+            '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock'
+        ],
+        output='screen'
+    )
+
+    joint_state_broadcaster_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=[
+            'joint_state_broadcaster',
+            '--controller-manager',
+            '/controller_manager'
+        ],
+        output='screen'
+    )
+
+    wheel_velocity_controller_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=[
+            'wheel_velocity_controller',
+            '--controller-manager',
+            '/controller_manager'
         ],
         output='screen'
     )
@@ -96,9 +113,10 @@ def generate_launch_description():
     return LaunchDescription([
         set_model_path,
         use_gui,
-        jsp_gui,
         rsp,
         rviz,
+        joint_state_broadcaster_spawner,
+        wheel_velocity_controller_spawner,
         gazebo,
         spawn_robot,
         bridge

@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
-<robot
-  name="robotino_description">
+<robot name="robotino_description">
 
   <!-- Enlace ficticio proyectado a ras de suelo -->
   <link name="base_footprint"/>
 
-  <!-- Unión que eleva el robot 6 cm desde el suelo ya que las ruedas tienen un radio de 6cm -->
+  <!-- Unión que eleva el robot 6 cm desde el suelo -->
   <joint name="base_footprint_joint" type="fixed">
     <parent link="base_footprint"/>
     <child link="base_link"/>
@@ -15,7 +14,7 @@
   <!-- Enlace central del robot -->
   <link name="base_link"/>
 
-  <!-- Unión entre base_link y el chasis 3D (ahora sin elevación en Z, ya que la elevación la hace el footprint) -->
+  <!-- Unión entre base_link y el chasis 3D -->
   <joint name="chasis_joint" type="fixed">
     <parent link="base_link"/>
     <child link="chasis_link"/>
@@ -25,16 +24,16 @@
   <link name="chasis_link">
     <inertial>
       <origin
-        xyz="0.0750820912111434 -1.43156698820812E-05 0.168076535406779"
+        xyz="-0.0750820912111433 1.43156698827196E-05 0.168076535406779"
         rpy="0 0 0" />
       <mass
         value="90.5436543221932" />
       <inertia
         ixx="1.39918645658022"
-        ixy="-0.000405479151189908"
-        ixz="-0.00155434172661178"
-        iyy="0.774326169008615"
-        iyz="-3.63158115482848E-05"
+        ixy="-0.000405479151195265"
+        ixz="0.00155434172661182"
+        iyy="0.774326169008614"
+        iyz="3.63158115482504E-05"
         izz="1.88558197947867" />
     </inertial>
     <visual>
@@ -52,15 +51,14 @@
       </material>
     </visual>
     <collision>
-      <origin xyz="0 0 0.15" rpy="0 0 0" /> <!-- Desplazamos la colisión a la mitad del alto (0.3 / 2) para que quede centrado -->
+      <origin xyz="0 0 0.15" rpy="0 0 0" />
       <geometry>
         <cylinder radius="0.2325" length="0.300" />
       </geometry>
     </collision>
   </link>
 
-  <link
-    name="rueda_link">
+  <link name="rueda_link">
     <inertial>
       <origin
         xyz="-2.05967388977601E-10 1.31737952686374E-10 -0.000273477957212588"
@@ -69,10 +67,10 @@
         value="0.498106960399148" />
       <inertia
         ixx="0.000256159949378851"
-        ixy="5.34153086430666E-14"
-        ixz="-2.02762130273749E-13"
+        ixy="5.34153082798227E-14"
+        ixz="-2.02762143826276E-13"
         iyy="0.000256159949082368"
-        iyz="-5.17902095166621E-13"
+        iyz="-5.17902094928863E-13"
         izz="0.000419607620337151" />
     </inertial>
     <visual>
@@ -97,37 +95,29 @@
     </collision>
   </link>
 
-  <joint
-    name="rueda_joint"
-    type="continuous">
+  <joint name="rueda_joint" type="continuous">
     <origin
-      xyz="0.17547 0 0"
-      rpy="1.5708 0 1.5708" />
-    <parent
-      link="chasis_link" />
-    <child
-      link="rueda_link" />
-    <axis
-      xyz="0 0 1" />
-    <dynamics
-      damping="0.1"
-      friction="0.1" />
+      xyz="-0.175471539771331 0 0"
+      rpy="1.5707963267949 0 -1.5707963267949" />
+    <parent link="chasis_link" />
+    <child link="rueda_link" />
+    <axis xyz="0 0 1" />
+    <dynamics damping="0.1" friction="0.1" />
   </joint>
 
-  <link
-    name="izquierda_link">
+  <link name="izquierda_link">
     <inertial>
       <origin
-        xyz="-1.26204602324265E-11 -9.7027663464519E-11 -0.000273478049972964"
+        xyz="-1.26204602324265E-11 -9.70276645487211E-11 -0.000273478049972964"
         rpy="0 0 0" />
       <mass
         value="0.498106963165628" />
       <inertia
         ixx="0.000256159949494238"
-        ixy="5.74017994840476E-14"
+        ixy="5.74017989573599E-14"
         ixz="4.18943850964693E-14"
         iyy="0.000256159949093497"
-        iyz="3.9487959637394E-14"
+        iyz="3.94879601615234E-14"
         izz="0.000419607619799673" />
     </inertial>
     <visual>
@@ -152,37 +142,29 @@
     </collision>
   </link>
 
-  <joint
-    name="izquierda_joint"
-    type="continuous">
+  <joint name="izquierda_joint" type="continuous">
     <origin
-      xyz="-0.087778 0.15199 0"
-      rpy="1.5708 0 -2.618" />
-    <parent
-      link="chasis_link" />
-    <child
-      link="izquierda_link" />
-    <axis
-      xyz="0 0 1" />
-    <dynamics
-      damping="0.1"
-      friction="0.1" />
+      xyz="0.087778 -0.15199 0"
+      rpy="1.5708 0 0.5236" />
+    <parent link="chasis_link" />
+    <child link="izquierda_link" />
+    <axis xyz="0 0 1" />
+    <dynamics damping="0.1" friction="0.1" />
   </joint>
 
-  <link
-    name="derecha_link">
+  <link name="derecha_link">
     <inertial>
       <origin
-        xyz="-9.88611970065278E-11 9.65094390037793E-11 -0.000273478063246235"
+        xyz="-9.88611553731644E-11 9.65094384616783E-11 -0.000273478063246124"
         rpy="0 0 0" />
       <mass
         value="0.498106961392022" />
       <inertia
         ixx="0.00025615994928719"
-        ixy="-5.11486266406266E-14"
-        ixz="1.2445670240376E-13"
-        iyy="0.00025615994929327"
-        iyz="2.16307060078576E-13"
+        ixy="-5.11486256981435E-14"
+        ixz="1.24456719344419E-13"
+        iyy="0.000256159949293269"
+        iyz="2.16307058801214E-13"
         izz="0.000419607620211318" />
     </inertial>
     <visual>
@@ -207,38 +189,30 @@
     </collision>
   </link>
 
-  <joint
-    name="derecha_joint"
-    type="continuous">
+  <joint name="derecha_joint" type="continuous">
     <origin
-      xyz="-0.087778 -0.15199 0"
-      rpy="1.5708 0 -0.5236" />
-    <parent
-      link="chasis_link" />
-    <child
-      link="derecha_link" />
-    <axis
-      xyz="0 0 1" />
-    <dynamics
-      damping="0.1"
-      friction="0.1" />
+      xyz="0.087778 0.15199 0"
+      rpy="1.5708 0 2.618" />
+    <parent link="chasis_link" />
+    <child link="derecha_link" />
+    <axis xyz="0 0 1" />
+    <dynamics damping="0.1" friction="0.1" />
   </joint>
 
-  <link
-    name="palo_link">
+  <link name="palo_link">
     <inertial>
       <origin
-        xyz="1.73472347597681E-16 -0.0873886605652474 -4.71844785465692E-16"
+        xyz="4.44089209850063E-16 -1.87350135405495E-16 -0.0873886605652496"
         rpy="0 0 0" />
       <mass
-        value="6.20700555638336" />
+        value="6.20700555638337" />
       <inertia
-        ixx="0.221613610672498"
-        ixy="-2.40121047643933E-16"
-        ixz="3.40005801291454E-16"
-        iyy="0.117280747364722"
-        iyz="1.50269958586418E-15"
-        izz="0.2216136106725" />
+        ixx="0.221613610672499"
+        ixy="2.77555756156289E-16"
+        ixz="-1.50402583196056E-15"
+        iyy="0.221613610672497"
+        iyz="2.38231749020068E-16"
+        izz="0.117280747364722" />
     </inertial>
     <visual>
       <origin
@@ -255,42 +229,36 @@
       </material>
     </visual>
     <collision>
-      <!-- Desplazamos -0.283 en el eje Y local (hacia abajo) para que quede debajo de la junta -->
-      <origin xyz="0 -0.283 0" rpy="-1.5708 0 0" /> 
+      <origin xyz="0 0 -0.283" rpy="0 0 0" />
       <geometry>
         <cylinder radius="0.100" length="0.566" />
       </geometry>
     </collision>
   </link>
 
-  <joint
-    name="palo_joint"
-    type="fixed">
+  <joint name="palo_joint" type="fixed">
     <origin
-      xyz="-2.846E-05 0 0.695"
-      rpy="1.5708 0 1.5708" />
-    <parent
-      link="chasis_link" />
-    <child
-      link="palo_link" />
-    <axis
-      xyz="0 0 0" />
+      xyz="2.846E-05 0 0.695"
+      rpy="0 0 0" />
+    <parent link="chasis_link" />
+    <child link="palo_link" />
+    <axis xyz="0 0 0" />
   </joint>
-  <link
-    name="bandeja_peque_link">
+
+  <link name="bandeja_peque_link">
     <inertial>
       <origin
-        xyz="0 -0.0099999999999999 -2.77555756156289E-17"
+        xyz="2.77555756156289E-17 0 -0.0099999999999999"
         rpy="0 0 0" />
       <mass
         value="1.55169544346107" />
       <inertia
         ixx="0.017159165445607"
-        ixy="-2.40741243048404E-35"
-        ixz="8.67361737988404E-19"
-        iyy="0.0342148845283166"
-        iyz="3.8677229917804E-19"
-        izz="0.017159165445607" />
+        ixy="8.67361737988404E-19"
+        ixz="-3.8677229917804E-19"
+        iyy="0.017159165445607"
+        iyz="2.40741243048404E-35"
+        izz="0.0342148845283166" />
     </inertial>
     <visual>
       <origin
@@ -302,8 +270,7 @@
       </geometry>
       <material
         name="">
-        <color
-          rgba="1 1 1 1" />
+        <color rgba="1 1 1 1" />
       </material>
     </visual>
     <collision>
@@ -316,17 +283,62 @@
       </geometry>
     </collision>
   </link>
-  <joint
-    name="bandeja_peque_joint"
-    type="fixed">
+
+  <joint name="bandeja_peque_joint" type="fixed">
     <origin
-      xyz="-2.846E-05 0 0.731"
-      rpy="1.5708 0 1.5708" />
-    <parent
-      link="chasis_link" />
-    <child
-      link="bandeja_peque_link" />
-    <axis
-      xyz="0 0 0" />
+      xyz="2.846E-05 0 0.731"
+      rpy="0 0 0" />
+    <parent link="chasis_link" />
+    <child link="bandeja_peque_link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+  <link name="Luz_Link">
+    <inertial>
+      <origin
+        xyz="0 0 -0.0215811619853097"
+        rpy="0 0 0" />
+      <mass
+        value="0.318884306993544" />
+      <inertia
+        ixx="0.00079308167887314"
+        ixy="-5.42101086242752E-20"
+        ixz="5.70355903674065E-20"
+        iyy="0.00079308167887314"
+        iyz="-1.45597364133817E-20"
+        izz="0.00011906568015998" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotino_description/meshes/Luz_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 0.35" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://robotino_description/meshes/Luz_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="Luz_joint" type="fixed">
+    <origin
+      xyz="2.846E-05 0 0.846"
+      rpy="0 0 0" />
+    <parent link="chasis_link" />
+    <child link="Luz_Link" />
+    <axis xyz="0 0 0" />
   </joint>
 </robot>

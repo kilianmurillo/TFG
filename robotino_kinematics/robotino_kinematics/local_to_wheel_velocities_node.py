@@ -34,12 +34,6 @@ class LocalToWheelVelocitiesNode(Node):
         self.r = 0.060   # Radio de la rueda (m)
 
     def local_to_wheel_velocities(self, vx, vy, w):
-        """
-        Ecuaciones cinemáticas ajustadas al sentido de giro de las articulaciones del URDF:
-        - Rueda 1 (rueda_joint, trasera): 180°
-        - Rueda 2 (izquierda_joint, frontal derecha): -60°
-        - Rueda 3 (derecha_joint, frontal izquierda): 60°
-        """
         # Cálculo de la velocidad lineal de cada rueda (m/s)
         v1 = -vy + self.R * w
         v2 = -(math.sqrt(3) / 2.0) * vx + 0.5 * vy + self.R * w
@@ -49,6 +43,12 @@ class LocalToWheelVelocitiesNode(Node):
         w1 = v1 / self.r
         w2 = v2 / self.r
         w3 = v3 / self.r
+
+        # Límite máximo de velocidad con reductora 1:32 (aprox 11.78 rad/s)
+        max_w = 11.78
+        w1 = max(-max_w, min(max_w, w1))
+        w2 = max(-max_w, min(max_w, w2))
+        w3 = max(-max_w, min(max_w, w3))
         
         return w1, w2, w3
 

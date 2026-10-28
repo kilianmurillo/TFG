@@ -49,8 +49,8 @@
     </gazebo>
     
     <gazebo reference="derecha_link">
-      <mu1>1.0</mu1>
-      <mu2>0.01</mu2>
+      <mu1>0.75</mu1>
+      <mu2>0.04</mu2>
       <fdir1>1 0 0</fdir1>
     </gazebo>
 </robot>

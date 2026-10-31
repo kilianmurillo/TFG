@@ -37,20 +37,20 @@
 
 <!-- Propiedades de fricción para las ruedas omnidireccionales en Gazebo -->
     <gazebo reference="rueda_link">
-      <mu1>1.0</mu1> <!-- Fricción normal para traccionar al avanzar -->
-      <mu2>0.01</mu2> <!-- Fricción casi nula lateral (simula los rodillos pasivos) -->
+      <mu1>0.6</mu1> <!-- Fricción normal para traccionar al avanzar -->
+      <mu2>0.03</mu2> <!-- Fricción casi nula lateral (simula los rodillos pasivos) -->
       <fdir1>1 0 0</fdir1> <!-- Indica que el eje X local es la dirección de tracción (mu1) -->
     </gazebo>
     
     <gazebo reference="izquierda_link">
-      <mu1>1.0</mu1>
-      <mu2>0.01</mu2>
+      <mu1>0.6</mu1>
+      <mu2>0.03</mu2>
       <fdir1>1 0 0</fdir1>
     </gazebo>
     
     <gazebo reference="derecha_link">
-      <mu1>0.75</mu1>
-      <mu2>0.04</mu2>
+      <mu1>0.6</mu1>
+      <mu2>0.03</mu2>
       <fdir1>1 0 0</fdir1>
     </gazebo>
 </robot>

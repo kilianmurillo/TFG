@@ -32,6 +32,8 @@ class LocalToWheelVelocitiesNode(Node):
         # --- PARÁMETROS DEL ROBOT ---
         self.R = 0.1755  # Distancia del centro a las ruedas (m)
         self.r = 0.060   # Radio de la rueda (m)
+        self.gear_ratio = 32.0     # Relación de la reductora 32:1
+        self.max_motor_w = 376.99  # Velocidad máxima del motor interno (rad/s)
 
     def local_to_wheel_velocities(self, vx, vy, w):
         # Cálculo de la velocidad lineal de cada rueda (m/s)
@@ -39,18 +41,28 @@ class LocalToWheelVelocitiesNode(Node):
         v2 = -(math.sqrt(3) / 2.0) * vx + 0.5 * vy + self.R * w
         v3 = (math.sqrt(3) / 2.0) * vx + 0.5 * vy + self.R * w
         
-        # Transformación a velocidades angulares (rad/s)
-        w1 = v1 / self.r
-        w2 = v2 / self.r
-        w3 = v3 / self.r
+        # 1. Velocidad angular exigida a la RUEDA (rad/s)
+        w1_wheel = v1 / self.r
+        w2_wheel = v2 / self.r
+        w3_wheel = v3 / self.r
 
-        # Límite máximo de velocidad con reductora 1:32 (aprox 11.78 rad/s)
-        max_w = 11.78
-        w1 = max(-max_w, min(max_w, w1))
-        w2 = max(-max_w, min(max_w, w2))
-        w3 = max(-max_w, min(max_w, w3))
+        # 2. Velocidad que se le exige al MOTOR (rad/s) multiplicando por la reductora
+        w1_motor = w1_wheel * self.gear_ratio
+        w2_motor = w2_wheel * self.gear_ratio
+        w3_motor = w3_wheel * self.gear_ratio
+
+        # 3. Saturación física del MOTOR (no puede girar a más de 376.99 rad/s)
+        w1_motor = max(-self.max_motor_w, min(self.max_motor_w, w1_motor))
+        w2_motor = max(-self.max_motor_w, min(self.max_motor_w, w2_motor))
+        w3_motor = max(-self.max_motor_w, min(self.max_motor_w, w3_motor))
         
-        return w1, w2, w3
+        # 4. Velocidad real final de la RUEDA (rad/s) tras la reducción física
+        # Esto es lo que se envía a Gazebo/ros2_control
+        w1_final = w1_motor / self.gear_ratio
+        w2_final = w2_motor / self.gear_ratio
+        w3_final = w3_motor / self.gear_ratio
+        
+        return w1_final, w2_final, w3_final
 
     def cmd_vel_callback(self, msg):
         # Actualizamos el reloj de seguridad

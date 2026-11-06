@@ -37,9 +37,9 @@ class LocalToWheelVelocitiesNode(Node):
 
     def local_to_wheel_velocities(self, vx, vy, w):
         # Cálculo de la velocidad lineal de cada rueda (m/s)
-        v1 = -vy + self.R * w
-        v2 = -(math.sqrt(3) / 2.0) * vx + 0.5 * vy + self.R * w
-        v3 = (math.sqrt(3) / 2.0) * vx + 0.5 * vy + self.R * w
+        v1 = vy + self.R * w
+        v2 = -(math.sqrt(3) / 2.0) * vx - 0.5 * vy + self.R * w
+        v3 = (math.sqrt(3) / 2.0) * vx - 0.5 * vy + self.R * w
         
         # 1. Velocidad angular exigida a la RUEDA (rad/s)
         w1_wheel = v1 / self.r

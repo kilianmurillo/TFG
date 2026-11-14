@@ -51,10 +51,16 @@ class LocalToWheelVelocitiesNode(Node):
         w2_motor = w2_wheel * self.gear_ratio
         w3_motor = w3_wheel * self.gear_ratio
 
-        # 3. Saturación física del MOTOR (no puede girar a más de 376.99 rad/s)
-        w1_motor = max(-self.max_motor_w, min(self.max_motor_w, w1_motor))
-        w2_motor = max(-self.max_motor_w, min(self.max_motor_w, w2_motor))
-        w3_motor = max(-self.max_motor_w, min(self.max_motor_w, w3_motor))
+        # 3. Saturación PROPORCIONAL de los motores
+        # Buscamos la velocidad máxima en valor absoluto que se está pidiendo a cualquier motor
+        max_req_w = max(abs(w1_motor), abs(w2_motor), abs(w3_motor))
+        
+        # Si la rueda más rápida supera el límite, calculamos un factor de reducción proporcional
+        if max_req_w > self.max_motor_w:
+            escala = self.max_motor_w / max_req_w
+            w1_motor *= escala
+            w2_motor *= escala
+            w3_motor *= escala
         
         # 4. Velocidad real final de la RUEDA (rad/s) tras la reducción física
         # Esto es lo que se envía a Gazebo/ros2_control

@@ -190,7 +190,8 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://robotino_description/meshes/bandeja_peque_link.STL" />
+        <!-- Reemplazamos el STL por un cilindro de radio y grosor aproximados -->
+        <cylinder radius="0.10" length="0.01" />
       </geometry>
     </collision>
   </link>
@@ -220,7 +221,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://robotino_description/meshes/Luz_Link.STL" />
+        <cylinder radius="0.05" length="0.10" />
       </geometry>
     </collision>
   </link>
@@ -250,7 +251,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://robotino_description/meshes/bandeja_grande_Link.STL" />
+        <cylinder radius="0.18" length="0.01" />
       </geometry>
     </collision>
   </link>
@@ -280,7 +281,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://robotino_description/meshes/pieza_3D_Link.STL" />
+        <box size="0.05 0.05 0.05" />
       </geometry>
     </collision>
   </link>
@@ -307,12 +308,6 @@
         <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
       </material>
     </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://robotino_description/meshes/Camara_Link.STL" />
-      </geometry>
-    </collision>
   </link>
 
   <joint name="Camara_joint" type="fixed">
@@ -337,12 +332,6 @@
         <color rgba="0.109803921568627 0.109803921568627 0.109803921568627 1" />
       </material>
     </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://robotino_description/meshes/LIDAR_Link.STL" />
-      </geometry>
-    </collision>
   </link>
 
   <joint name="LIDAR_joint" type="fixed">

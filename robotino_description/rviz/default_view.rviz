@@ -61,10 +61,30 @@ Visualization Manager:
       Enabled: true
       Links:
         All Links Enabled: true
+        Camara_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         Expand Joint Details: false
         Expand Link Details: false
         Expand Tree: false
+        LIDAR_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         Link Tree Style: Links in Alphabetic Order
+        Luz_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        bandeja_grande_Link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         bandeja_peque_link:
           Alpha: 1
           Show Axes: false
@@ -94,6 +114,11 @@ Visualization Manager:
           Show Trail: false
           Value: true
         palo_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        pieza_3D_Link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -118,6 +143,14 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        Camara_Link:
+          Value: true
+        LIDAR_Link:
+          Value: true
+        Luz_Link:
+          Value: true
+        bandeja_grande_Link:
+          Value: true
         bandeja_peque_link:
           Value: true
         base_footprint:
@@ -132,6 +165,8 @@ Visualization Manager:
           Value: true
         palo_link:
           Value: true
+        pieza_3D_Link:
+          Value: true
         rueda_link:
           Value: true
       Marker Scale: 1
@@ -143,6 +178,14 @@ Visualization Manager:
         base_footprint:
           base_link:
             chasis_link:
+              Camara_Link:
+                {}
+              LIDAR_Link:
+                {}
+              Luz_Link:
+                {}
+              bandeja_grande_Link:
+                {}
               bandeja_peque_link:
                 {}
               derecha_link:
@@ -151,9 +194,50 @@ Visualization Manager:
                 {}
               palo_link:
                 {}
+              pieza_3D_Link:
+                {}
               rueda_link:
                 {}
       Update Interval: 0
+      Value: true
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz_default_plugins/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
+      Enabled: true
+      Keep: 100
+      Name: Odometry
+      Position Tolerance: 0.10000000149011612
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 255; 25; 0
+        Head Length: 0.30000001192092896
+        Head Radius: 0.10000000149011612
+        Shaft Length: 1
+        Shaft Radius: 0.05000000074505806
+        Value: Arrow
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /odom
       Value: true
   Enabled: true
   Global Options:
@@ -201,7 +285,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 1.2496006488800049
+      Distance: 3.8810698986053467
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -216,10 +300,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.24039813876152039
+      Pitch: 0.29039818048477173
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.4203826189041138
+      Yaw: 0.585383415222168
     Saved: ~
 Window Geometry:
   Displays:

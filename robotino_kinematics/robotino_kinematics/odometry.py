@@ -11,6 +11,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 import time
+import threading
 from rclpy.time import Time
 
 def quaternion_from_euler(ai, aj, ak):
@@ -47,64 +48,42 @@ class OdometryNode(Node):
         self.x = 0.0
         self.y = 0.0
         self.theta = 0.0
-        
-        # Inicializamos last_time a None para tomar el primer timestamp de Gazebo
-        self.last_time = None 
-        
+        self.last_time = None
+        self.start_sim_time = None
+
         self.current_vx = 0.0
         self.current_vy = 0.0
         self.current_wz = 0.0
 
         self.joint_names = ['rueda_joint', 'izquierda_joint', 'derecha_joint']
 
-        # Almacenamiento de datos para la gráfica de 3 ruedas
-        self.start_time = time.time()
+        # Protección para compartir datos entre el hilo de ROS y el de matplotlib
+        self.lock = threading.Lock()
         self.time_data = []
         self.cmd_data = [[], [], []]
         self.real_data = [[], [], []]
         self.current_cmd = [0.0, 0.0, 0.0]
 
-        # Configuración de matplotlib (3 subgráficos)
-        plt.ion()
-        self.fig, self.ax = plt.subplots(3, 1, figsize=(8, 9))
-        self.fig.suptitle("Respuesta de Velocidad: Consigna vs Real")
-        self.fig.tight_layout(pad=3.0)
-
-        # Configuración visual de cada rueda
-        nombres_ruedas = ["Rueda 1 (Trasera)", "Rueda 2 (Front-Der)", "Rueda 3 (Front-Izq)"]
-        self.line_cmd = []
-        self.line_real = []
-
-        for i in range(3):
-            line_c, = self.ax[i].plot([], [], 'r--', label='Consigna')
-            line_r, = self.ax[i].plot([], [], 'b-', label='Real')
-            self.line_cmd.append(line_c)
-            self.line_real.append(line_r)
-            self.ax[i].set_title(nombres_ruedas[i])
-            self.ax[i].set_ylabel("rad/s")
-            self.ax[i].legend(loc="upper right")
-            self.ax[i].grid(True)
-        
-        self.ax[2].set_xlabel("Tiempo (s)")
-
-        # Suscriptores y Publicadores
-        self.joint_sub = self.create_subscription(JointState, '/joint_states', self.joint_state_callback, 10)
-        self.cmd_sub = self.create_subscription(Float64MultiArray, '/wheel_velocity_controller/commands', self.cmd_callback, 10)
+        # depth=1 para leer siempre el último dato sin acumular retraso en cola
+        self.joint_sub = self.create_subscription(
+            JointState, '/joint_states', self.joint_state_callback, 1
+        )
+        self.cmd_sub = self.create_subscription(
+            Float64MultiArray, '/wheel_velocity_controller/commands', self.cmd_callback, 1
+        )
         self.odom_pub = self.create_publisher(Odometry, '/odom', 10)
         self.tf_broadcaster = TransformBroadcaster(self)
 
-        # Temporizador para actualizar la gráfica
-        self.plot_timer = self.create_timer(0.1, self.update_plot)
-        self.get_logger().info("Nodo de odometría inicializado.")
+        self.get_logger().info("Nodo de odometría inicializado (hilo separado + depth=1).")
 
     def cmd_callback(self, msg):
         if len(msg.data) >= 3:
-            self.current_cmd = [msg.data[0], msg.data[1], msg.data[2]]
+            with self.lock:
+                self.current_cmd = [msg.data[0], msg.data[1], msg.data[2]]
 
     def wheel_to_local_velocities(self, w1, w2, w3, msg_stamp):
-        # Usamos el timestamp extraído del mensaje de Gazebo
         current_time = Time.from_msg(msg_stamp)
-        
+
         if self.last_time is None:
             self.last_time = current_time
             return self.x, self.y, self.theta
@@ -112,7 +91,6 @@ class OdometryNode(Node):
         dt = (current_time.nanoseconds - self.last_time.nanoseconds) / 1e9
         self.last_time = current_time
 
-        # Evitamos cálculos si el dt es 0 o negativo (previene saltos temporales)
         if dt <= 0.0:
             return self.x, self.y, self.theta
 
@@ -121,7 +99,6 @@ class OdometryNode(Node):
         vy = -1.0 * self.r * ( (-2.0 / 3.0) * w1 + (1.0 / 3.0) * w2 + (1.0 / 3.0) * w3 )
         wz = -1.0 * self.r * ( (1.0 / (3.0 * self.L)) * w1 + (1.0 / (3.0 * self.L)) * w2 + (1.0 / (3.0 * self.L)) * w3 )
 
-        # Integración en el Marco Global
         delta_x = (vx * math.cos(self.theta) - vy * math.sin(self.theta)) * dt
         delta_y = (vx * math.sin(self.theta) + vy * math.cos(self.theta)) * dt
         delta_theta = wz * dt
@@ -144,48 +121,36 @@ class OdometryNode(Node):
         except ValueError:
             return
 
-        # Pasamos la marca de tiempo exacta del mensaje
         self.wheel_to_local_velocities(w1, w2, w3, msg.header.stamp)
-
-        # Guardar datos para la gráfica
-        current_t = time.time() - self.start_time
-        self.time_data.append(current_t)
-        
-        for i in range(3):
-            self.cmd_data[i].append(self.current_cmd[i])
-        
-        self.real_data[0].append(w1)
-        self.real_data[1].append(w2)
-        self.real_data[2].append(w3)
-
-        # Limitar memoria intermedia
-        if len(self.time_data) > 100:
-            self.time_data.pop(0)
-            for i in range(3):
-                self.cmd_data[i].pop(0)
-                self.real_data[i].pop(0)
-
-        # Publicamos la odometría utilizando la misma marca de tiempo
         self.publish_odometry(msg.header.stamp)
 
-    def update_plot(self):
-        if not self.time_data:
-            return
+        # Tiempo de simulación de Gazebo
+        current_msg_time = Time.from_msg(msg.header.stamp)
+        if self.start_sim_time is None:
+            self.start_sim_time = current_msg_time
+        current_t = (current_msg_time.nanoseconds - self.start_sim_time.nanoseconds) / 1e9
 
-        for i in range(3):
-            self.line_cmd[i].set_data(self.time_data, self.cmd_data[i])
-            self.line_real[i].set_data(self.time_data, self.real_data[i])
-            self.ax[i].relim()
-            self.ax[i].autoscale_view()
-            
-        self.fig.canvas.draw()
-        self.fig.canvas.flush_events()
+        with self.lock:
+            self.time_data.append(current_t)
+            for i in range(3):
+                self.cmd_data[i].append(self.current_cmd[i])
+
+            self.real_data[0].append(w1)
+            self.real_data[1].append(w2)
+            self.real_data[2].append(w3)
+
+            # Mantiene siempre los últimos 15 segundos en pantalla
+            while self.time_data and (current_t - self.time_data[0]) > 15.0:
+                self.time_data.pop(0)
+                for i in range(3):
+                    self.cmd_data[i].pop(0)
+                    self.real_data[i].pop(0)
 
     def publish_odometry(self, stamp):
         q = quaternion_from_euler(0, 0, self.theta)
 
         t = TransformStamped()
-        t.header.stamp = stamp  # <-- ASIGNACIÓN DIRECTA DEL TIMESTAMP DEL SIMULADOR
+        t.header.stamp = stamp
         t.header.frame_id = 'odom'
         t.child_frame_id = 'base_footprint'
 
@@ -200,7 +165,7 @@ class OdometryNode(Node):
         self.tf_broadcaster.sendTransform(t)
 
         odom = Odometry()
-        odom.header.stamp = stamp  # <-- ASIGNACIÓN DIRECTA
+        odom.header.stamp = stamp
         odom.header.frame_id = 'odom'
         odom.child_frame_id = 'base_footprint'
 
@@ -221,15 +186,57 @@ class OdometryNode(Node):
 def main(args=None):
     rclpy.init(args=args)
     node = OdometryNode()
+
+    # Hilo secundario dedicado exclusivamente a ROS 2
+    ros_thread = threading.Thread(target=rclpy.spin, args=(node,), daemon=True)
+    ros_thread.start()
+
+    # Hilo principal dedicado exclusivamente a la gráfica
+    plt.ion()
+    fig, ax = plt.subplots(3, 1, figsize=(8, 9))
+    fig.suptitle("Respuesta de Velocidad: Consigna vs Real")
+    fig.tight_layout(pad=3.0)
+
+    nombres_ruedas = ["Rueda 1 (Trasera)", "Rueda 2 (Front-Der)", "Rueda 3 (Front-Izq)"]
+    line_cmd = []
+    line_real = []
+
+    for i in range(3):
+        line_c, = ax[i].plot([], [], 'r--', label='Consigna')
+        line_r, = ax[i].plot([], [], 'b-', label='Real')
+        line_cmd.append(line_c)
+        line_real.append(line_r)
+        ax[i].set_title(nombres_ruedas[i])
+        ax[i].set_ylabel("rad/s")
+        ax[i].legend(loc="upper right")
+        ax[i].grid(True)
+
+    ax[2].set_xlabel("Tiempo Simulación (s)")
+
     try:
-        rclpy.spin(node)
+        while rclpy.ok():
+            with node.lock:
+                t_data = list(node.time_data)
+                c_data = [list(node.cmd_data[i]) for i in range(3)]
+                r_data = [list(node.real_data[i]) for i in range(3)]
+
+            if t_data:
+                for i in range(3):
+                    line_cmd[i].set_data(t_data, c_data[i])
+                    line_real[i].set_data(t_data, r_data[i])
+                    ax[i].relim()
+                    ax[i].autoscale_view()
+                fig.canvas.draw()
+                fig.canvas.flush_events()
+
+            time.sleep(0.05)
     except KeyboardInterrupt:
         pass
     finally:
         node.destroy_node()
-        rclpy.shutdown()
-        # Esto asegura que la ventana gráfica se cierre y no deje zombis
-        plt.close('all') 
+        if rclpy.ok():
+            rclpy.shutdown()
+        plt.close('all')
 
 if __name__ == '__main__':
     main()

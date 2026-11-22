@@ -1,0 +1,39 @@
+running egg_info
+creating ../build/robotino_kinematics/robotino_kinematics.egg-info
+writing ../build/robotino_kinematics/robotino_kinematics.egg-info/PKG-INFO
+writing dependency_links to ../build/robotino_kinematics/robotino_kinematics.egg-info/dependency_links.txt
+writing entry points to ../build/robotino_kinematics/robotino_kinematics.egg-info/entry_points.txt
+writing requirements to ../build/robotino_kinematics/robotino_kinematics.egg-info/requires.txt
+writing top-level names to ../build/robotino_kinematics/robotino_kinematics.egg-info/top_level.txt
+writing manifest file '../build/robotino_kinematics/robotino_kinematics.egg-info/SOURCES.txt'
+reading manifest file '../build/robotino_kinematics/robotino_kinematics.egg-info/SOURCES.txt'
+writing manifest file '../build/robotino_kinematics/robotino_kinematics.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/kilian/Desktop/TFG/src/build/robotino_kinematics/build
+creating /home/kilian/Desktop/TFG/src/build/robotino_kinematics/build/lib
+creating /home/kilian/Desktop/TFG/src/build/robotino_kinematics/build/lib/robotino_kinematics
+copying robotino_kinematics/local_to_wheel_velocities_node.py -> /home/kilian/Desktop/TFG/src/build/robotino_kinematics/build/lib/robotino_kinematics
+copying robotino_kinematics/odometry.py -> /home/kilian/Desktop/TFG/src/build/robotino_kinematics/build/lib/robotino_kinematics
+copying robotino_kinematics/__init__.py -> /home/kilian/Desktop/TFG/src/build/robotino_kinematics/build/lib/robotino_kinematics
+running install
+running install_lib
+creating /home/kilian/Desktop/TFG/src/install/robotino_kinematics/lib/python3.12/site-packages/robotino_kinematics
+copying /home/kilian/Desktop/TFG/src/build/robotino_kinematics/build/lib/robotino_kinematics/local_to_wheel_velocities_node.py -> /home/kilian/Desktop/TFG/src/install/robotino_kinematics/lib/python3.12/site-packages/robotino_kinematics
+copying /home/kilian/Desktop/TFG/src/build/robotino_kinematics/build/lib/robotino_kinematics/odometry.py -> /home/kilian/Desktop/TFG/src/install/robotino_kinematics/lib/python3.12/site-packages/robotino_kinematics
+copying /home/kilian/Desktop/TFG/src/build/robotino_kinematics/build/lib/robotino_kinematics/__init__.py -> /home/kilian/Desktop/TFG/src/install/robotino_kinematics/lib/python3.12/site-packages/robotino_kinematics
+byte-compiling /home/kilian/Desktop/TFG/src/install/robotino_kinematics/lib/python3.12/site-packages/robotino_kinematics/local_to_wheel_velocities_node.py to local_to_wheel_velocities_node.cpython-312.pyc
+byte-compiling /home/kilian/Desktop/TFG/src/install/robotino_kinematics/lib/python3.12/site-packages/robotino_kinematics/odometry.py to odometry.cpython-312.pyc
+byte-compiling /home/kilian/Desktop/TFG/src/install/robotino_kinematics/lib/python3.12/site-packages/robotino_kinematics/__init__.py to __init__.cpython-312.pyc
+running install_data
+creating /home/kilian/Desktop/TFG/src/install/robotino_kinematics/share/ament_index
+creating /home/kilian/Desktop/TFG/src/install/robotino_kinematics/share/ament_index/resource_index
+creating /home/kilian/Desktop/TFG/src/install/robotino_kinematics/share/ament_index/resource_index/packages
+copying resource/robotino_kinematics -> /home/kilian/Desktop/TFG/src/install/robotino_kinematics/share/ament_index/resource_index/packages
+copying package.xml -> /home/kilian/Desktop/TFG/src/install/robotino_kinematics/share/robotino_kinematics
+running install_egg_info
+Copying ../build/robotino_kinematics/robotino_kinematics.egg-info to /home/kilian/Desktop/TFG/src/install/robotino_kinematics/lib/python3.12/site-packages/robotino_kinematics-0.0.0-py3.12.egg-info
+running install_scripts
+Installing local_to_wheel_velocities_node script to /home/kilian/Desktop/TFG/src/install/robotino_kinematics/lib/robotino_kinematics
+Installing odometry.py script to /home/kilian/Desktop/TFG/src/install/robotino_kinematics/lib/robotino_kinematics
+writing list of installed files to '/home/kilian/Desktop/TFG/src/build/robotino_kinematics/install.log'

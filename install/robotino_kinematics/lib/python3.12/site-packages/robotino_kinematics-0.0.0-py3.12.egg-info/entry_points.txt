@@ -1,3 +1,0 @@
-[console_scripts]
-local_to_wheel_velocities_node = robotino_kinematics.local_to_wheel_velocities_node:main
-odometry.py = robotino_kinematics.odometry:main

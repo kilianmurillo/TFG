@@ -1,9 +1,0 @@
-/home/kilian/Desktop/TFG/src/build/robotino_description/CMakeFiles/uninstall.dir
-/home/kilian/Desktop/TFG/src/build/robotino_description/CMakeFiles/robotino_description_uninstall.dir
-/home/kilian/Desktop/TFG/src/build/robotino_description/CMakeFiles/test.dir
-/home/kilian/Desktop/TFG/src/build/robotino_description/CMakeFiles/edit_cache.dir
-/home/kilian/Desktop/TFG/src/build/robotino_description/CMakeFiles/rebuild_cache.dir
-/home/kilian/Desktop/TFG/src/build/robotino_description/CMakeFiles/list_install_components.dir
-/home/kilian/Desktop/TFG/src/build/robotino_description/CMakeFiles/install.dir
-/home/kilian/Desktop/TFG/src/build/robotino_description/CMakeFiles/install/local.dir
-/home/kilian/Desktop/TFG/src/build/robotino_description/CMakeFiles/install/strip.dir

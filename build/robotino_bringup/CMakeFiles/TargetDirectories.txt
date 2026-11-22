@@ -1,9 +1,0 @@
-/home/kilian/Desktop/TFG/src/build/robotino_bringup/CMakeFiles/uninstall.dir
-/home/kilian/Desktop/TFG/src/build/robotino_bringup/CMakeFiles/robotino_bringup_uninstall.dir
-/home/kilian/Desktop/TFG/src/build/robotino_bringup/CMakeFiles/test.dir
-/home/kilian/Desktop/TFG/src/build/robotino_bringup/CMakeFiles/edit_cache.dir
-/home/kilian/Desktop/TFG/src/build/robotino_bringup/CMakeFiles/rebuild_cache.dir
-/home/kilian/Desktop/TFG/src/build/robotino_bringup/CMakeFiles/list_install_components.dir
-/home/kilian/Desktop/TFG/src/build/robotino_bringup/CMakeFiles/install.dir
-/home/kilian/Desktop/TFG/src/build/robotino_bringup/CMakeFiles/install/local.dir
-/home/kilian/Desktop/TFG/src/build/robotino_bringup/CMakeFiles/install/strip.dir
